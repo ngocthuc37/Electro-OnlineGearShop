@@ -1,0 +1,39 @@
+
+<div class="container">
+    <div class="home">
+        <div class="home_container ">
+            <div class="home_content text-center">
+                <div class="home_title">Thông tin tài khoản</div>
+            </div>
+        </div>
+    </div>
+    <div id="content" class="row">
+        <div class="col-lg-6 content-box-container">
+            <form method="POST" action="/users/update-profile">
+                <div id="content-box">
+                    <div class="input-row">
+                        <p class="input-title">Họ và tên</p>
+                        <input class="typing-input" type="text" name="name" placeholder="<%=user.name%>">
+                    </div>
+                    <div class="input-row">
+                        <p class="input-title">Số điện thoại</p>
+                        <input class="typing-input" type="text" name="phone" placeholder="<%=user.phone%>">
+                    </div>
+                    <div class="input-row">
+                        <p class="input-title">Địa chỉ</p>
+                        <input class="typing-input" type="text" name="address" placeholder="<%=user.address%>">
+                    </div>
+                    <div class="input-row">
+                        <p class="input-title">Email</p>
+                        <input class="typing-input" type="text" placeholder="<%=user.email%>" disabled>
+                    </div>
+                    <div id="input-row-last">
+                        <button type="submit" class="btn btn-danger button">CẬP NHẬT</button>
+                    </div>
+
+                    <div class="mes-err-login"><% include ('../../partials/messages') %></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

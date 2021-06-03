@@ -1,0 +1,60 @@
+<!-- Phần ô sản phẩm  -->
+<div class="section">
+    <div class="container">
+        <div class="title-search">Kết quả tìm kiếm cho <q><%= category + ' ' + name %></q></div>
+        <div class="count-product-search">Có&nbsp;<b><%= countAll %></b>&nbsp;sản phẩm được tìm thấy</div>
+        <div class="store-filter clearfix">
+            <div class="store-sort">
+                <label>
+                    Số sản phẩm mỗi trang:
+                    <select class="input-select" onchange="location = this.value;">
+                        <option value="?name=<%= name %>&category=<%= category %>&count=12&page=1"
+                            <% if (count == 12) { %>selected<% } %>>12</option>
+                        <option value="?name=<%= name %>&category=<%= category %>&count=8&page=1"
+                            <% if (count == 8) { %>selected<% } %>>8</option>
+                        <option value="?name=<%= name %>&category=<%= category %>&count=4&page=1"
+                            <% if (count == 4) { %>selected<% } %>>4</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="product-show">
+            <div class="row">
+                <% products.forEach((entry) => { %>
+                <div class="col-md-2 col-xs-6">
+                    <div class="product product_store">
+                        <a href="/product/<%= entry._id %>">
+                            <div class="product-img">
+                                <img src="<%= entry.imgSrc %>" alt="">
+                                <div class="product-label">
+                                    <!-- <span class="sale">-30%</span>
+                        <span class="new">MỚI</span> -->
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-body">
+                            <p class="product-category"><%= entry.category %></p>
+                            <h3 class="product-name"><a href="/product/<%= entry.name %>"><%= entry.name %></a></h3>
+                            <h4 class="product-price"><%= priceConverter(entry.price) %> đ <del
+                                    class="product-old-price"><%= priceConverter(entry.old_price) %> đ</del>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+        <div class="store-filter clearfix">
+            <span class="store-qty">Đang xem <%= count %>-<%= countAll %> sản phẩm</span>
+            <ul class="store-pagination">
+                <% for (var i = 1; i <= countPages; i++) { %>
+                <li <% if (page == i) { %> class="active" <% } %>>
+                    <a <% if (page != i) { %>
+                        href="?name=<%= name %>&category=<%= category %>&count=<%= count %>&page=<%= i %>"
+                        <% } %>><%= i %></a>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</div>

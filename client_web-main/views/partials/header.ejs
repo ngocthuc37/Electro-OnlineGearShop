@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>ShopPhukien</title>
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="css/slick-theme.css" />
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="css/nouislider.min.css" />
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <!-- TOP HEADER -->
+        <div id="top-header">
+            <div class="container">
+                <ul class="header-links pull-left">
+                    <li><a href="#"><i class="fa fa-phone"></i> 9999999999</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> shopphukien.tttteam@gmail.com</a></li>
+                    <li><a href="#"><i class="fa fa-map-marker"></i> 227 Nguyễn Văn Cừ, Phường 4, Quận 5, Thành phố Hồ Chí Minh</a></li>
+                </ul>
+                <ul class="header-links pull-right">
+                    <% if (typeof user != 'undefined') { %>
+                    <li><a href="/users/profile">Xin chào <%= user.name %></a></li>
+                    <li><a href="/users/logout">Đăng xuất</a></li>
+                    <% } else { %>
+                    <li><a href="/users/login">Đăng nhập</a></li>
+                    <li><a href="/users/register">Đăng ký</a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+        <!-- /TOP HEADER -->
+
+        <!-- MAIN HEADER -->
+        <div id="header">
+            <div class="container">
+                <div class="row">
+                    <!-- LOGO -->
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="/" class="logo">
+                                <img src="./img/logo.png" alt="Logo trang web">
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- SEARCH BAR -->
+                    <div class="col-md-6">
+                        <div class="header-search">
+                            <form action="/search" method="POST">
+                                <select class="input-select" name="category">
+                                    <option value="" selected>Tất cả</option>
+                                    <option value="Bàn%20phím"<% if (typeof category != 'undefined' && category == "Bàn phím") { %> selected <% } %>>Bàn phím</option>
+                                    <option value="Chuột"<% if (typeof category != 'undefined' && category == "Chuột") { %> selected <% } %>>Chuột</option>
+                                    <option value="Loa"<% if (typeof category != 'undefined' && category == "Loa") { %> selected <% } %>>Loa</option>
+                                    <option value="Tai%20nghe"<% if (typeof category != 'undefined' && category == "Tai nghe") { %> selected <% } %>>Tai nghe</option>
+                                </select>
+                                <input class="input" auto-focus tab-index='1' type='text' auto-complete='search'
+                                    name="name" id='inputSearch' placeholder="Nhập từ khóa" autocomplete="on"
+                                    <% if (typeof name != 'undefined') { %>value="<%= name %>" <% } %> required>
+                                <button class="search-btn" type="submit">Tìm kiếm</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /SEARCH BAR -->
+
+                    <!-- ACCOUNT -->
+                    <div class="col-md-3 clearfix">
+                        <div class="header-ctn">
+                            <!-- Cart -->
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" href="/cart">
+                                    <i class="fa fa-shopping-cart fa-lg"></i>
+                                    <p>Giỏ hàng</p>
+                                    <div id="cart-quantity" class="qty">...</div>
+                                </a>
+                            </div>
+                            <!-- End Cart -->
+
+                            <!-- Account -->
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="fa fa-user-o account-icon fa-lg"></i>
+                                    <p>Tài khoản</p>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="/users/profile">Thông tin tài khoản<br></a>
+                                    <a class="dropdown-item" href="/users/change-password">Đổi mật khẩu<br></a>
+                                    <a class="dropdown-item" href="/users/order-management">Đơn hàng của tôi<br></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /ACCOUNT -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- /MAIN HEADER -->
+    </header>
+    <!-- /HEADER -->
+    <!-- NAVIGATION -->
+    <nav id="navigation">
+        <!-- container -->
+        <div class="container">
+            <!-- responsive-nav -->
+            <div id="responsive-nav">
+                <!-- NAV -->
+                <ul class="main-nav nav navbar-nav">
+                    <!-- CATEGORY -->
+                    <li>
+                        <button type="button" class="btn btn-secondary button-style">
+                            <a href="/">Trang chủ</a>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-secondary button-style">
+                            <a href="/store?count=12&page=1">Tất cả sản phẩm</a>
+                        </button>
+                    </li>
+                    <!-- CATEGORY -->
+                    <li>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle button-style" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <a>Loại sản phẩm</a>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="/store?category=Bàn%20phím">Bàn phím<br></a>
+                                <a class="dropdown-item" href="/store?category=Chuột">Chuột<br></a>
+                                <a class="dropdown-item" href="/store?category=Loa">Loa<br></a>
+                                <a class="dropdown-item" href="/store?category=Tai%20nghe">Tai nghe<br></a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- MANUFACTURER -->
+                    <li>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle button-style" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <a>Nhà sản xuất</a>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="/store?producer=Asus">Asus<br></a>
+                                <a class="dropdown-item" href="/store?producer=Fulhen">Fuhlen<br></a>
+                                <a class="dropdown-item" href="/store?producer=Logitech">Logitech<br></a>
+                                <a class="dropdown-item" href="/store?producer=Sony">Sony<br></a>
+                                <a class="dropdown-item" href="/store?producer=Razer">Razer<br></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <!-- /NAV -->
+            </div>
+            <!-- /responsive-nav -->
+        </div>
+        <!-- /container -->
+    </nav>
+    <!-- /NAVIGATION -->

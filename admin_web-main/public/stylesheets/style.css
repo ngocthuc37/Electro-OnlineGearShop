@@ -1,0 +1,425 @@
+﻿/*=============================================================
+    Authour URI: www.binarytheme.com
+    License: Commons Attribution 3.0
+
+    http://creativecommons.org/licenses/by/3.0/
+
+    100% Free To use For Personal And Commercial Use.
+    IN EXCHANGE JUST GIVE US CREDITS AND TELL YOUR FRIENDS ABOUT US
+   
+    ========================================================  */
+
+/* =============================================================
+   GENERAL STYLES
+ ============================================================ */
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 28px;
+}
+
+.set-radius-zero {
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+}
+
+.content-wrapper {
+    margin-top: 40px;
+    min-height: 800px;
+    padding-bottom: 90px;
+}
+
+.header-line {
+    font-weight: 900;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eeeeee;
+    text-transform: uppercase;
+}
+
+.text-line {
+    font-weight: 400;
+    padding-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.pad-botm {
+    padding-bottom: 30px;
+}
+
+.btn-outline-primary {
+    border-color: #313F40;
+    border-width: 1px;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 3px;
+    background-color: transparent;
+    color: #3d4145;
+}
+
+.active {
+    background-color: #313F40;
+    color: white;
+}
+
+.selectstyle {
+    width: 350px;
+    position: relative;
+}
+
+.ss_dib {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.ss_button {
+    margin: 0;
+    color: #595959;
+    border: 1px solid #cbcbcb;
+    border-radius: 3px;
+    width: 100%;
+    cursor: pointer;
+    text-decoration: none;
+    background: 0 0;
+    padding: 8px;
+    overflow: hidden;
+    clear: both;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 12px;
+    font-weight: 700;
+    word-break: break-all;
+}
+
+.ss_text {
+    text-overflow: ellipsis;
+    text-indent: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 95%;
+}
+
+.ss_dib {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.ss_image {
+    width: 7px;
+    height: 11px;
+    margin-top: 8px;
+    position: absolute;
+    alignment: center;
+    background: url(https://www.jqueryscript.net/demo/Searchable-Dropdown-Select-jQuery-Selectstyle/images/google.png) no-repeat;
+}
+
+.ss_ulsearch_nonactive {
+    max-height: 300px;
+    width: 410px;
+    display: none;
+}
+
+.ss_ulsearch .search input {
+    margin: -36px 0 0;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 5px 1px rgba(0, 0, 0, .1);
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    overflow: auto;
+    z-index: 100;
+    display: none;
+}
+
+ul {
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+}
+
+/* =============================================================
+   NAVBAR & MENU STYLES
+ ============================================================ */
+
+.right-div {
+    float: right;
+    padding: 20px;
+}
+
+#menu-top a {
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 25px 15px 25px 15px;
+    text-transform: uppercase;
+}
+
+.menu-section {
+    background-color: #f7f7f7;
+    border-bottom: 5px solid #536166;
+    width: 100%
+}
+
+.menu-top-active {
+    background-color: #eeeeee;
+}
+
+.navbar-inverse {
+    background-color: #FFF;
+    border-color: rgba(155, 153, 153, 0.23);
+}
+
+.navbar {
+    min-height: 90px;
+    margin-bottom: 0px;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: transparent;
+}
+
+.navbar-toggle {
+    background-color: black;
+    border: 1px solid black;
+}
+
+/* =============================================================
+   DASHBOARD STYLES
+ ============================================================ */
+
+.img-comments {
+    border: 3px double #e1e1e1;
+    height: 60px;
+}
+
+.img-statistic {
+    max-width: 70px;
+    max-height: 70px;
+    width: 100%;
+    height: 100%;
+}
+
+.chat-widget-main {
+    max-height: 330px;
+    overflow: auto;
+}
+
+.slide-bdr {
+    border: 5px solid #9170E4
+}
+
+.chat-widget-left:after {
+    top: 100%;
+    left: 10%;
+    border: solid transparent;
+    content: " ";
+    position: absolute;
+    border-top-color: #F70E62;
+    border-width: 15px;
+    margin-left: -15px;
+}
+
+.chat-widget-left {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    position: relative;
+    border: 1px solid #F70E62;
+    font-size: 12px;
+}
+
+.chat-widget-right:after {
+    top: 100%;
+    right: 10%;
+    border: solid transparent;
+    content: " ";
+    position: absolute;
+    border-top-color: #5AA8CC;
+    border-width: 15px;
+    margin-left: -15px;
+}
+
+.chat-widget-right {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    position: relative;
+    border: 1px solid #5AA8CC;
+    font-size: 12px;
+}
+
+.chat-widget-name-left {
+    color: #808080;
+    margin-top: 30px;
+    margin-left: 60px;
+    text-align: left;
+}
+
+.img-left-chat {
+    border: 3px double #e1e1e1;
+    float: left;
+    margin-right: 30px;
+}
+
+.img-right-chat {
+    border: 3px double #e1e1e1;
+    float: right;
+    margin-left: 30px;
+}
+
+.chat-widget-main img-right {
+    border: 3px double #e1e1e1;
+    float: left;
+}
+
+.chat-widget-name-left h4 {
+    font-weight: normal;
+    font-size: 11px;
+}
+
+.chat-widget-name-left h5 {
+    font-weight: normal;
+    font-size: 10px;
+}
+
+.chat-widget-name-right h4 {
+    font-weight: normal;
+    font-size: 11px;
+}
+
+.chat-widget-name-right h5 {
+    font-weight: normal;
+    font-size: 10px;
+}
+
+.chat-widget-name-right {
+    color: #808080;
+    margin-top: 40px;
+    margin-right: 60px;
+    text-align: right;
+}
+
+.top-10-img img {
+    width: 94.5px;
+    height: 95px;
+    margin: 6px;
+}
+
+.back-widget-set {
+    background-color: transparent;
+}
+
+.process {
+    color: #f48629;
+    font-weight: bold;
+}
+
+.img-product {
+    width: 50px;
+    height: 50px;
+    margin: 2px;
+    object-fit: contain;
+}
+
+.style-middle-center {
+    vertical-align: middle!important;
+    text-align: center!important;
+}
+
+.header-panel {
+    background: linear-gradient(90deg, #313F40 0%, #536166 100%);
+    font-weight: bold;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.btn-logout {
+    color: #fff;
+    background: #536166;
+}
+
+.img-store {
+    max-width: 1150px;
+    max-height: 768px;
+    width: 100%;
+    height: auto;
+    alignment: center;
+}
+
+.input-group-prepend {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.img-dialog {
+    max-height: 70px;
+    max-width: 70px;
+    border-radius: 5px;
+    border-color: #7c838a;
+    border-width: 1px;
+    border-style: solid;
+}
+
+/* =============================================================
+   FOOTER SECTION STYLES
+ ============================================================ */
+
+.footer-section {
+    color: #000;
+    font-size: 13px;
+    background: linear-gradient(90deg, #313F40 0%, #536166 100%);
+    text-align: right;
+    height: 57px;
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.footer-section a, .footer-section a:hover {
+    color: #000;
+}
+
+.ft-team {
+    color: white;
+    font-size: 18px;
+}
+
+.img-category {
+    height: 100px;
+    width: auto;
+}
+
+/*=========================================*/
+
+.chart-1 {
+    display: block;
+    overflow: hidden;
+    border: 0px;
+    margin: 0px;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.chart-2{
+    display: block; 
+    height: 570px; 
+    width: 1140px;
+}

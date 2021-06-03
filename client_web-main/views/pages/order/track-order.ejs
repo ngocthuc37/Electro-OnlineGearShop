@@ -1,0 +1,49 @@
+<div class="content-box-container">
+    <div id="track-order-container">
+        <h4>Theo dõi đơn hàng: <span style="font-size: medium;font-weight: normal;"><%= order._id %></span></h4>
+        <br>
+        <h4>Trạng thái đơn hàng:</h4>
+        <div class="row" style="margin-bottom: 10px;">
+            <span>Đặt hàng thành công</span>
+            <span style="margin-left: 40px;">Tiếp nhận đơn hàng</span>
+            <span style="margin-left: 100px;">Chuẩn bị giao</span>
+            <span style="margin-left: 130px;">Đang giao</span>
+            <span style="margin-left: 110px;">Đã giao</span>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="progress">
+                    <div class="one danger-color"></div>
+                    <div class="two danger-color"></div>
+                    <div class="three <% if (order.status >= 1) {%>danger-color<% } else { %>no-color<% } %>"></div>
+                    <div class="progress-bar progress-bar-danger" <% if (order.status == 0) {%>style="width: 52%;"
+                        <%} else if (order.status == 1) {%>style="width: 77%;" <%} else {%>style="width: 100%;" <% } %>>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h4>Thông tin kiện hàng:</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th id="col-cart-1" scope="col">Sản phẩm</th>
+                    <th id="col-cart-2" scope="col">Tổng cộng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="">
+                        <% order.items.forEach(item => { %>
+                        <p><%= item.quantity %>x <%= item.name %></p>
+                        <% }) %>
+                    </td>
+
+                    <td id="">
+                        <p><%= priceConverter(order.totalCost) %> đ</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

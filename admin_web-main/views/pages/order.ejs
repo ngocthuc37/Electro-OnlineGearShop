@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]-->
+    <title>Electro Admin</title>
+    <!-- BOOTSTRAP CORE STYLE  -->
+    <link href="stylesheets/bootstrap.css" rel="stylesheet" />
+    <!-- FONT AWESOME STYLE  -->
+    <link href="stylesheets/font-awesome.css" rel="stylesheet" />
+    <!-- DATATABLE STYLE  -->
+    <link href="javascripts/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <!-- CUSTOM STYLE  -->
+    <link href="stylesheets/style.css" rel="stylesheet" />
+    <!-- GOOGLE FONT -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+</head>
+
+<body>
+
+    <%- include('../partials/header.ejs') %>
+    <% 
+    function changeDateFormat(date) {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        return day + '/' + month + '/' + year;
+    }
+    %>
+
+    <!-- MENU SECTION END-->
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="row pad-botm">
+                <div class="col-md-12">
+                    <h4 class="header-line">QUẢN LÝ ĐƠN HÀNG</h4>
+                </div>
+                <!-- <span class="col-md-12 input-group-prepend" style="text-align: right; vertical-align: middle">
+                    <span>Bộ lọc</span>
+                    <div class="col-md-3" style="float: right;">
+                        <div id="newproduct">
+                            <select class="form-control" id="myFilter">&lt;!&ndash;&ndash;&gt;
+                                <option value="-1">Tất cả</option>
+                                <option value="0">Đặt hàng thành công</option>
+                                <option value="1">Tiếp nhận đơn hàng</option>
+                                <option value="2">Đóng gói</option>
+                                <option value="3">Giao hàng</option>
+                                <option value="4">Giao hàng thành công</option>
+                            </select>
+                        </div>
+                    </div>
+                </span> -->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Advanced Tables -->
+                    <div class="panel">
+                        <div class="panel-heading header-panel">
+                            Đơn đặt hàng
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tên Khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Địa chỉ giao hàng</th>
+                                            <th>Ngày đặt hàng</th>
+                                            <th>Trạng thái</th>
+                                            <th>Chi tiết</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="list-oders">
+                                        <%var i = 1%>
+                                        <% orders.forEach((entry) => { %>
+                                        <tr class="odd gradeX">
+                                            <td id="order-stt"><%=i %></td>
+                                            <td id="order-code"><%= entry._id %></td>
+                                            <td id="order-name"><%= entry.username %></td>
+                                            <td id="order-phone"><%= entry.phone %></td>
+                                            <td class="center" id="order-address"><%= entry.address %></td>
+                                            <td class="center" id="order-update"><%=changeDateFormat(entry.date)%></td>
+                                            <td id="order-status" style="color: green;" data-id="">
+                                                <%  if(entry.status==0) {%>Chưa giao hàng
+                                                <%} else if(entry.status==1) {%> Đang giao hàng
+                                                <%} else if(entry.status==2) {%> Giao hàng thành công
+                                                <%}%>     
+                                            </td>
+
+                                            <td class="center">
+                                            <button class="btn btn-outline-primary btn-edit-order" type="button" data-toggle="modal" data-target="#myModal" 
+                                                data-id="<%=entry.items._id%>"
+                                                data-total-price="<%=entry.totalCost%>"
+                                                data-items="<%=JSON.stringify(entry.items)%>"
+                                                data-status-number="">
+                                                <i class="fa fa-edit"></i></button>
+                                            </td>
+
+                                        </tr>
+                                        <% i++; }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Advanced Tables -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- CONTENT-WRAPPER SECTION END-->
+    <%- include('../partials/footer.ejs') %>
+
+
+    <!-- Phần form hiển thị để sửa thông tin -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+        style="display: none;">
+        <form class="edit-form" id="myForm" method="POST" enctype="multipart/form-data">>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header header-panel">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel" style="font-weight: bold">Thông tin chi tiết đơn hàng
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12 col-log-12">
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-md-4 col-form-label">Mã đơn hàng</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <input class="form-control ng-untouched ng-pristine ng-valid name" type="text"
+                                        name='name' id="txt-order-code" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-md-4 col-form-label">Ngày mua</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <input class="form-control ng-untouched ng-pristine ng-valid name" type="text"
+                                        name='name' id="txt-order-update" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-md-4 col-form-label">Họ tên khách hàng</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <input class="form-control ng-untouched ng-pristine ng-valid name" type="text"
+                                        name='code' id="txt-order-name" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-md-4 col-form-label">Địa chỉ giao hàng</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <input class="form-control ng-untouched ng-pristine ng-valid name" type="text"
+                                        name='code' id="txt-order-address" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-md-4 col-form-label">Số điện thoại</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <input class="form-control ng-untouched ng-pristine ng-valid name" type="text"
+                                        name='name' id="txt-order-phone" disabled>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-md-4 col-form-label">Trạng thái đơn hàng</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <input style="text-align: start;"
+                                        class="form-control ng-untouched ng-pristine ng-valid name" type="text"
+                                        name='name' id="txt-order-status" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-md-4 col-form-label">Danh sách sản phẩm</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-items">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Số lượng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="list-product">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-md-4 col-form-label">Tổng tiền thanh toán</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <input class="form-control ng-untouched ng-pristine ng-valid name" type="text"
+                                        name='name' id="txt-order-totalprice" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-md-4 col-form-label">Thay đổi trạng thái đơn hàng</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <select class="form-control" id="mySelect">&lt;!&ndash;&ndash;&gt;
+                                        <option value="-1">Chọn trạng thái đơn hàng</option>
+                                        <option value="0">0 - Chưa giao hàng</option>
+                                        <option value="1">1 - Đang giao hàng</option>
+                                        <option value="2">2 - Giao hàng thành công</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name='id' id="txt-order-id"
+                                    style="height: 0px; width: 0px; visibility: hidden;">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-primary" id="btn-submit">Lưu thay đổi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- FOOTER SECTION END-->
+
+    <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+    <!-- CORE JQUERY  -->
+    <script src="javascripts/jquery-1.10.2.js"></script>
+    <!-- BOOTSTRAP SCRIPTS  -->
+    <script src="javascripts/bootstrap.js"></script>
+    <!-- DATATABLE SCRIPTS  -->
+    <script src="javascripts/dataTables/jquery.dataTables.js"></script>
+    <script src="javascripts/dataTables/dataTables.bootstrap.js"></script>
+    <!-- CUSTOM SCRIPTS  -->
+    <script src="javascripts/custom.js"></script>
+    <script>
+        function formatDate(time) {
+            var date = new Date(time);
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            return day + '/' + month + '/' + year;
+        }
+
+        $(".btn-edit-order").click(function () {
+
+            $("#list-product").empty();
+            var list = JSON.parse($(this).attr('data-items'));
+            list.forEach(function (e, i) {
+                var tr = document.createElement("tr")
+                var td0 = document.createElement("td")
+                td0.innerHTML = i;
+                var td1 = document.createElement("td")
+                td1.innerHTML = e.name;
+                var td2 = document.createElement("td")
+                td2.innerHTML = e.quantity;
+                tr.append(td0);
+                tr.append(td1);
+                tr.append(td2);
+                console.log(tr)
+                $("#list-product").append(tr);
+            })
+
+            var code = $(this).parent().parent().find('#order-code').text();
+            var url = "/order/" + code;
+            $.get(url)
+                .then(data => {
+                    var statusCurrent = data.status;
+                    var statusNumber = parseInt(statusCurrent, 10);
+                    if (statusNumber == 4) {
+                        $('#btn-submit').attr("disabled", true);
+                        $('#mySelect').attr("disabled", true);
+                    } else {
+                        $('#btn-submit').removeAttr("disabled");
+                        $('#mySelect').removeAttr("disabled");
+                    }
+
+                })
+
+            var totalPrice = $(this).attr('data-total-price');
+            var name = $(this).parent().parent().find('#order-name').text();
+            var phone = $(this).parent().parent().find('#order-phone').text();
+            var address = $(this).parent().parent().find('#order-address').text();
+            var update = $(this).parent().parent().find('#order-update').text();
+            var status = $(this).parent().parent().find('#order-status').text();
+
+            $('#txt-order-name').attr('placeholder', name);
+            $('#txt-order-code').attr('placeholder', code);
+            $('#txt-order-phone').attr('placeholder', phone);
+            $('#txt-order-address').attr('placeholder', address);
+            $('#txt-order-update').attr('placeholder', update);
+            $('#txt-order-status').attr('placeholder', status);
+
+            // console.log(parseInt(totalPrice,10).toLocaleString('it-IT', {style : 'currency', currency : 'VND'}))
+            $('#txt-order-totalprice').attr('placeholder', parseInt(totalPrice, 10).toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+
+        })
+
+        $("#btn-submit").click(function () {
+            var id = $('#txt-order-code').attr('placeholder');
+            var element = document.getElementById("mySelect");
+            var selectedValue = element.options[element.selectedIndex].value;
+            var url = '/order/update-status-order?id=' + id + '&' + 'status=' + selectedValue;
+            //var url = '/order/update-status-order';
+            //console.log(selectedValue);
+            $("#myForm").attr('action', url);
+        })
+    </script>
+</body>
+
+</html>

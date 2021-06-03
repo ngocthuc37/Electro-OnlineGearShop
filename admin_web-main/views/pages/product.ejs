@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]-->
+  <title>ShopPhukien_Admin</title>
+  <!-- BOOTSTRAP CORE STYLE  -->
+  <link href="stylesheets/bootstrap.css" rel="stylesheet" />
+  <!-- FONT AWESOME STYLE  -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link href="stylesheets/font-awesome.css" rel="stylesheet" />
+  <!-- DATATABLE STYLE  -->
+  <link href="javascripts/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+  <!-- CUSTOM STYLE  -->
+  <link href="stylesheets/style.css" rel="stylesheet" />
+  <!-- GOOGLE FONT -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+</head>
+
+<body>
+  <%- include('../partials/header.ejs') %>
+
+  <!-- MENU SECTION END-->
+  <div class="content-wrapper">
+    <div class="container">
+      <div class="row pad-botm">
+        <div class="col-md-12">
+          <h4 class="header-line">QUẢN LÝ SẢN PHẨM</h4>
+        </div>
+        <span class="col-md-12 input-group-prepend" style="text-align: right">
+          <span>Thêm sản phẩm</span>
+          <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#myModal"
+            id="btn-add-product">
+            <i class="fa fa-plus-square"></i>
+          </button>
+        </span>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Advanced Tables -->
+          <div class="panel">
+            <div class="panel-heading header-panel">
+              Danh sách sản phẩm
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTables-example">
+                  <thead>
+                    <tr>
+                      <th class="style-middle-center">STT</th>
+                      <th class="style-middle-center">Tên sản phẩm</th>
+                      <th class="style-middle-center">Hình ảnh</th>
+                      <th class="style-middle-center">Mô tả</th>
+                      <th class="style-middle-center">Giá mới (VNĐ) </th>
+                      <th class="style-middle-center">Giá cũ (VNĐ)</th>
+                      <th class="style-middle-center">Số lượng</th>
+                      <th class="style-middle-center">Danh mục</th>
+                      <th class="style-middle-center">Chức năng</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% var i = 1 %>
+                    <% products.forEach((entry) => { %>
+                    <tr>
+                      <td class="style-middle-center"><%= i%>
+                      </td>
+                      <td class="style-middle-center" id="product-name"><%= entry.name %>
+                      </td>
+                      <td class="style-middle-center">
+                        <img src="<%= entry.imgSrc %>" class="img-product" id="product-image">
+                      </td>
+                      <td class="style-middle-center" id="product-info"><%= entry.description %>
+                      </td>
+                      <td class="style-middle-center" id="product-price"><%= priceConverter(entry.price) %>
+                      </td>
+                      <td class="style-middle-center" id="product-old-price"><%= priceConverter(entry.old_price) %>
+                      </td>
+                      <td class="style-middle-center" id="product-quantity"><%= entry.quantity %>
+                      </td>
+                      <td class="style-middle-center" id="product-category"><%= entry.category %>
+                      </td>
+                      <td class="style-middle-center">
+                        <button class="btn btn-outline-primary btn-edit-product" type="button" data-toggle="modal"
+                          data-target="#myModal" data-id="#">
+                          <i class="fa fa-edit"></i></button>
+                        <a class="btn btn-outline-primary btn-delete-product" type="button" href="/product/delete/<%= entry._id %>">
+                          <i class="far fa-trash-alt"></i></a>
+                      </td>
+                    </tr>
+                    <% i++; }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!--End Advanced Tables -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- CONTENT-WRAPPER SECTION END-->
+  <%- include('../partials/footer.ejs') %>
+
+  <!-- Phần form hiển thị để sửa thông tin -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog">
+      <form method="POST" id="my-form" enctype="multipart/form-data">
+        <div class="modal-content">
+          <div class="modal-header header-panel">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel" style="font-weight: bold">Thông tin sản phẩm</h4>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12 col-log-12">
+              <div class="form-group row">
+                <label class="col-lg-2 col-md-2 col-form-label">Tên</label>
+                <div class="col-lg-10 col-md-10">
+                  <input class="form-control ng-untouched ng-pristine ng-valid" type="text" name='name'
+                    id="txt-product-name" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-2 col-md-2 col-form-label">Danh mục</label>
+                <div class="col-lg-10 col-md-10">
+                  <input class="form-control ng-untouched ng-pristine ng-valid" type="text" name='category' required=""
+                    id="txt-product-category" required>
+                </div>
+              </div>
+        
+              <div class="form-group row">
+                <label class="col-lg-2 col-md-2 col-form-label">Giá mới</label>
+                <div class="col-lg-10 col-md-10">
+                  <input class="form-control ng-pristine ng-valid ng-touched" type="number" step="1000" name='price' required=""
+                    id="txt-product-price" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-2 col-md-2 col-form-label">Giá cũ</label>
+                <div class="col-lg-10 col-md-10">
+                  <input class="form-control ng-pristine ng-valid ng-touched" type="number" step="1000" name='old_price'
+                    id="txt-product-old-price" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-2 col-md-2 col-form-label">Số lượng</label>
+                <div class="col-lg-10 col-md-10">
+                  <input class="form-control ng-pristine ng-valid ng-touched" type="number" name='quantity'
+                    id="txt-product-quantity" required>
+                </div>
+              </div>
+              <!-- <div class="form-group">
+                <label>Mô tả</label>
+                <textarea class="form-control" rows="3" name='info' required id="txt-product-id"></textarea>
+                <input type="text" name='info' id="txt-product-id" style="height: 0px; width: 0px; visibility: hidden;">
+              </div> -->
+              <div class="form-group row">
+                <label class="col-lg-2 col-md-2 col-form-label">Mô tả</label>
+                <div class="col-lg-10 col-md-10">
+                  <input class="form-control ng-untouched ng-pristine ng-valid" type="text" name='info'
+                    id="txt-product-info" required>
+                </div>
+              </div>
+              <label class="col-form-label">Hình ảnh</label>
+              <div class="form-group">
+                <section class="thumbnail-container">
+                  <div class="thumbnail-container--content image-box" for="image-upload">
+                    <input accept="image/jpeg, image/gif, image/png" id="image-upload" multiple=""
+                      style="display: none;" type="file" name="image" onchange="loadFile(event)" required>
+                    <label class="style-pointer" for="image-upload" style="max-height: 100%; max-width: 100%">
+                      <img class="img-dialog" src="images/imageHolder.png" id="txt-product-image">
+                    </label>
+                  </div>
+                </section>
+              </div>
+            </div>
+           
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 8px;">Hủy</button>
+            <a href="/product" target="_parent">
+              <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- FOOTER SECTION END-->
+  <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+  <!-- CORE JQUERY  -->
+  <script src="javascripts/jquery-1.10.2.js"></script>
+  <script>
+    const _priceConvert = (x) => {
+      return Number(x.toString().replace(/\./gi, ""));
+    }
+    $("#btn-add-product").click(function () {
+      $("#my-form").attr('action', '/product/add');
+      $('#txt-product-name').attr('value', '');
+      $('#txt-product-category').attr('value', '');
+      $('#txt-product-price').attr('placeholder', '');
+      $('#txt-product-old-price').attr('placeholder', '');
+      $('#txt-product-quantity').attr('number', '');
+      $('#txt-product-image').attr('src', 'images/imageHolder.png');
+      $('#txt-product-info').attr('value', '');
+      $("#category-list option").attr('selected', false);
+    })
+    $(".btn-edit-product").click(function () {
+      var id = $(this).data('id');
+      $("#my-form").attr('action', '/product/edit');
+      var name = $(this).parent().parent().find('#product-name').text();
+      var category = $(this).parent().parent().find('#product-category').text();
+      var price = $(this).parent().parent().find('#product-price').text();
+      //console.log($(this).parent().parent());
+      var old_price = $(this).parent().parent().find('#product-old-price').text();
+      var quantity = $(this).parent().parent().find('#product-quantity').text();
+      var image = $(this).parent().parent().find('#product-image').attr('src');
+      var info = $(this).parent().parent().find('#product-info').text();
+      var category = $(this).parent().parent().find('#product-category').text().trim();
+      $('#txt-product-name').attr('value', name);
+      $('#txt-product-category').attr('value', category);
+      $('#txt-product-price').attr('value',  _priceConvert(price));
+      $('#txt-product-old-price').attr('value', _priceConvert(old_price));
+      $('#txt-product-quantity').attr('value', Number(quantity));
+      $('#txt-product-image').attr('src', image);
+      $('#txt-product-info').attr('value', info);
+      // $("#category-list option").filter(function () {
+      //   return $(this).text() == category;
+      // }).attr('selected', true);
+      //$('#txt-product-id').attr('value', id);
+    })
+    var loadFile = function (event) {
+      var image = document.getElementById('txt-product-image');
+      image.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+  </script>
+
+  <!-- BOOTSTRAP SCRIPTS  -->
+  <script src="javascripts/bootstrap.js"></script>
+  <!-- DATATABLE SCRIPTS  -->
+  <script src="javascripts/dataTables/jquery.dataTables.js"></script>
+  <script src="javascripts/dataTables/dataTables.bootstrap.js"></script>
+  <!-- CUSTOM SCRIPTS  -->
+  <script src="javascripts/custom.js"></script>
+</body>
+
+</html>

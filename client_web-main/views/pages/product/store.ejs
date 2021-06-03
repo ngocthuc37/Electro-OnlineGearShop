@@ -1,0 +1,53 @@
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="/">Trang chủ</a></li>
+                    <% if (category != '') { %><li><a href="/store?category=<%= category %>"><%= category %></a></li><% } %>
+                    <% if (producer != '') { %><li><a href="/store?producer=<%= producer %>"><%= producer %></a></li><% } %>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- SECTION -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <!-- ASIDE -->
+            <div id="aside" class="col-md-3">
+                <%- include ('../../partials/left-filter.ejs') %>
+            </div>
+            <!-- /ASIDE -->
+
+            <!-- STORE -->
+            <div id="store" class="col-md-9">
+                <!-- store top filter -->
+                <%- include ('../../partials/top-filter.ejs') %>
+                <!-- /store top filter -->
+
+               <!-- store products -->
+               <div class="row">
+                <%- include ('../../partials/grid-products.ejs') %>
+                </div>
+            <!-- /store products -->
+
+                <!-- store bottom filter -->
+                <%- include ('../../partials/bottom-filter.ejs') %>
+                <!-- /store bottom filter -->
+            </div>
+            <!-- /STORE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

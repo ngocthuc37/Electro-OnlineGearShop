@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="cart_container">
+        <div class="home">
+            <div class="home_container ">
+                <div class="home_content text-center">
+                    <div class="home_title">Lịch sử đơn hàng</div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th id="col-order-2" scope="col">Mã đơn hàng</th>
+                    <th id="col-order-2" scope="col">Ngày mua</th>
+                    <th id="col-order-1" scope="col">Sản phẩm</th>
+                    <th id="col-order-2" scope="col">Tổng tiền</th>
+                    <th id="col-order-2" scope="col">Trạng thái đơn hàng</th>
+                    <th id="col-order-2" scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% orders.forEach(entry => { %>
+                <tr>
+                    <td class="">
+                        <div>
+                            <a href="/users/track-order/<%= entry._id %>">
+                                <p><%= entry._id %></p>
+                            </a>
+                        </div>
+                    </td>
+                    <td id="">
+                        <p><%= changeDateFormat(entry.date) %></p>
+                    </td>
+                    <td id="">
+                        <% entry.items.forEach(item => { %>
+                        <p><%= item.quantity %>x <%= item.name %></p>
+                        <% }) %>
+                    </td>
+
+                    <td id="">
+                        <p><%= priceConverter(entry.totalCost) %> đ</p>
+                    </td>
+
+                    <td id="">
+                        <p>
+                            <% if (entry.status == 0) { %>
+                            Chưa giao hàng
+                            <% } else if (entry.status == 1) { %>
+                            Đang giao hàng
+                            <% } else { %>
+                            Đã giao hàng
+                            <% } %>
+                        </p>
+                    </td>
+                    <td id="">
+                        <a href="/users/track-order/<%= entry._id %>">
+                            <button type="submit" class="btn btn-danger">Chi tiết đơn hàng</button>
+                        </a>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <div class="buy-checkout">
+            <a href="/cart"><button type="button" class="btn btn-outline-danger">Quay lại giỏ hàng</button></a>
+        </div>
+    </div>
+</div>

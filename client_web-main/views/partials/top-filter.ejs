@@ -1,0 +1,22 @@
+<div class="store-filter clearfix">
+    <div class="store-sort">
+        <label>
+            <select class="input-select" onchange="location = this.value;">
+                <option value="?<%= filterStr %>" selected>Mới nhất</option>
+                <option value="?<%= filterStr %>sort=name-asc" <% if (sort == 'name-asc') { %> selected <% } %>>Tên (A -> Z)</option>
+                <option value="?<%= filterStr %>sort=name-des" <% if (sort == 'name-des') { %> selected <% } %>>Tên (Z -> A)</option>
+                <option value="?<%= filterStr %>sort=price-asc" <% if (sort == 'price-asc') { %> selected <% } %>>Giá (thấp -> cao)</option>
+                <option value="?<%= filterStr %>sort=price-des" <% if (sort == 'price-des') { %> selected <% } %>>Giá (cao -> thấp)</option>
+            </select>
+        </label>
+
+        <label>
+            Số sản phẩm mỗi trang:
+            <select class="input-select" onchange="location = this.value;">
+                <option value="?<%= filterStr %><%= sortStr %>count=12&page=1" <% if (count == 12) { %> selected <% } %>>12</option>
+                <option value="?<%= filterStr %><%= sortStr %>count=8&page=1" <% if (count == 8) { %> selected <% } %>>8</option>
+                <option value="?<%= filterStr %><%= sortStr %>count=4&page=1" <% if (count == 4) { %> selected <% } %>>4</option>
+            </select>
+        </label>
+    </div>
+</div> 

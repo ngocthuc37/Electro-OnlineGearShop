@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<!--[if IE]>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <![endif]-->
+	<title>ShopPhukien_Admin</title>
+	<!-- CHART -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+	<!-- BOOTSTRAP CORE STYLE  -->
+	<link href="stylesheets/bootstrap.css" rel="stylesheet" />
+	<!-- FONT AWESOME STYLE  -->
+	<link href="stylesheets/font-awesome.css" rel="stylesheet" />
+	<!-- CUSTOM STYLE  -->
+	<link href="stylesheets/style.css" rel="stylesheet" />
+	<!-- GOOGLE FONT -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+</head>
+
+<body>
+	<%- include('../partials/header.ejs') %>
+	<!-- MENU SECTION END-->
+	<div class="content-wrapper">
+		<div class="container">
+
+			<!-- <div class="row pad-botm col-md-12">
+				<div class="row">
+					<div class="col-md-2">
+						<h4 class="text-line">Thời gian: </h4>
+					</div>
+					<div class="col-md-10">
+						<div id="selector" class="btn-group" role="group" aria-label="Basic example">
+							<button type="button" class="btn btn-outline-primary active" value="0">Hôm nay </button>
+
+							<button type="button" class="btn btn-outline-primary" value="3">3 ngày trước</button>
+							<button type="button" class="btn btn-outline-primary" value="7">1 tuần trước</button>
+							<button type="button" class="btn btn-outline-primary" value="31">1 tháng trước</button>
+							<button type="button" class="btn btn-outline-primary" value="365">1 năm trước</button>
+						</div>
+					</div>
+				</div>
+				<br />
+			</div> -->
+			<h4 class="header-line">THỐNG KÊ TỔNG THU - SL ĐƠN HÀNG - SL NGƯỜI DÙNG</h4>
+			<div class="row">
+				<div class="col-md-4 col-sm-4 col-xs-6">
+					<div class="alert alert-info back-widget-set text-center">
+						<img src="images/revenue.png" class="img-statistic" />
+						<h3>Tổng doanh thu</h3>
+						<h4 id="info-totalprice-order">25000000</h4>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-6">
+					<div class="alert alert-warning back-widget-set text-center">
+						<img src="images/order.png" class="img-statistic" />
+						<h3>Đơn hàng</h3>
+						<h4 id="info-count-order"><%= countOrders %></h4>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-6">
+					<div class="alert alert-success back-widget-set text-center">
+						<img src="images/customer.png" class="img-statistic" />
+						<h3>Người dùng</h3>
+						<h4 id="info-count-user"><%= countUsers %></h4>
+					</div>
+				</div>
+			</div>
+
+			<h4 class="header-line">THỐNG KÊ SẢN PHẨM ĐÃ BÁN</h4>
+			<div class="row">
+				<!-- <div class="col-md-4 col-sm-4 col-xs-12">
+					<div class="panel">
+						<div class="panel-heading header-panel">
+							Hình ảnh 10 sản phẩm bán chạy nhất
+						</div>
+						<div class="panel-body text-center top-10-img" id="image-sold-product">
+
+						</div>
+
+					</div>
+				</div> -->
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="panel">
+						<div class="panel-heading header-panel">
+							Top sản phẩm bán chạy nhất
+						</div>
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>STT</th>
+											<th>Tên sản phẩm</th>
+											<th>Số lượng bán ra</th>
+										</tr>
+									</thead>
+									<tbody id="list-sold-product">
+										 <% for (var i = 0; i < top10.length; i++) { %>
+										<tr>
+											<td><%= i + 1 %></td>
+											<td><%= top10[i]._id %></td>
+											<td><%= top10[i].totalAmount %></td>
+										</tr>
+										<% } %> 
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- CHART -->
+			<h4 class="header-line">THỐNG KÊ DOANH SỐ BÁN HÀNG</h4>
+			<div class="row">
+				<iframe class="chartjs-hidden-iframe chart-1" tabindex="-1"></iframe>
+				<canvas id="chart"></canvas>
+			</div>
+			<input type="text" id="labels" value="<% for (var i = 0; i < data.length; i++) {%><%= data[i]._id %>,<% } %>" hidden>
+			<input type="text" id="data" value="<% for (var i = 0; i < data.length; i++) {%><%= data[i].totalSales %>,<% } %>" hidden>
+		</div>
+	</div>
+	<!-- CONTENT-WRAPPER SECTION END-->
+
+	<%- include('../partials/footer.ejs') %>
+	<!-- FOOTER SECTION END-->
+
+</body>
+
+<script>
+	let myChart = document.getElementById('chart').getContext('2d');
+	let labels = document.getElementById('labels').value.split(',');
+	labels.pop();
+	let dataStr = document.getElementById('data').value.split(',');
+	dataStr.pop();
+	let data = [];
+	// Parse each dataStr element to number
+	dataStr.forEach(entry => {
+		data.push(parseInt(entry))
+	});
+
+	let chart = new Chart(myChart, {
+		type: 'bar',
+		data: {
+			labels: labels.reverse(),
+			datasets: [{
+				label: 'Doanh thu',
+				data: data.reverse()
+			}]
+		},
+		option: {
+		}
+	});
+</script>
+
+</html>

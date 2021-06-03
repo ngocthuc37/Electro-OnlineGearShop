@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Dashboard">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Bootstrap,Admin,Template,Free,Angular,Dashboard,Typescript">
+  <link rel="shortcut icon" href="images/Floral.png">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+  <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+  <title>Electro Admin</title>
+  <link href="stylesheets/bootstrap.css" rel="stylesheet" />
+  <!-- FONT AWESOME STYLE  -->
+  <link href="stylesheets/font-awesome.css" rel="stylesheet" />
+  <!-- CUSTOM STYLE  -->
+  <link href="stylesheets/style.css" rel="stylesheet" />
+  <!-- GOOGLE FONT -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+  <style>
+    .app-body[_ngcontent-c0] .main[_ngcontent-c0] {
+      flex: 1;
+      min-width: 0;
+      margin-left: 0 !important
+    }
+  </style>
+  <style type="text/css" media="all" id="my"></style>
+</head>
+
+<body class="app" ng-version="6.1.10">
+  <router-outlet></router-outlet>
+  <app-dashboard _nghost-c0="">
+    <div _ngcontent-c0="" class="app-body">
+      <main _ngcontent-c0="" class="main d-flex align-items-center" style="margin-top: 200px;">
+        <div _ngcontent-c0="" class="container">
+          <div _ngcontent-c0="" class="row">
+            <div _ngcontent-c0="" class="col-md-8 mx-auto">
+              <div _ngcontent-c0="" class="card-group">
+                <div _ngcontent-c0="" class="card text-white card-text-white">
+                  <div _ngcontent-c0="" class="card-body text-center rx-text-center card-bodyLogin">
+                    <div _ngcontent-c0=""><img _ngcontent-c0="" src="img/login.png"
+                        style="width: 320px; height: 335px;padding-top: 15px;">
+                    </div>
+                  </div>
+                </div>
+                <div _ngcontent-c0="" class="card p-4">
+                  <div _ngcontent-c0="" class="card-body">
+                    <!-- show any messages that come back with authentication -->
+                    <div class="alert alert-danger"><%- include ('../partials/messages') %></div>
+                    <form method="POST" id="my-form" _ngcontent-c0="" novalidate=""
+                      class="ng-untouched ng-pristine ng-valid" action="/login">
+                      <h1 _ngcontent-c0="">LOGIN</h1>
+                      <p _ngcontent-c0="" class="text-muted"></p>
+                      <div _ngcontent-c0="" class="input-group mb-3">
+                        <div _ngcontent-c0="" class="input-group-prepend"><span _ngcontent-c0=""
+                            class="input-group-text"><i _ngcontent-c0="" class="fa fa-user"></i></span>
+                        </div>
+                        <input _ngcontent-c0="" name='email' id="email" A
+                          class="form-control ng-dirty ng-touched ng-invalid" required="" type="text"
+                          placeholder="Email">
+                      </div>
+                      <div _ngcontent-c0="" class="input-group mb-4">
+                        <div _ngcontent-c0="" class="input-group-prepend"><span _ngcontent-c0=""
+                            class="input-group-text"><i _ngcontent-c0="" class="fa fa-lock"></i></span>
+                        </div>
+                        <input _ngcontent-c0="" name='password' id="password"
+                          class="form-control ng-dirty ng-touched ng-invalid" name="password" required=""
+                          type="password" placeholder="Password">
+                      </div>
+                      <hr _ngcontent-c0="">
+                      <div _ngcontent-c0="" class="row">
+                        <div _ngcontent-c0="" class="col-6">
+                          <button _ngcontent-c0="/home" type="submit" class="btn btn-dark px-4 active"
+                            style="width: 100%" type="button">Login</button>
+                        </div>
+                        <div _ngcontent-c0="" class="col-6 text-right"></div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </app-dashboard>
+</body>

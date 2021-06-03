@@ -1,0 +1,10 @@
+<div class="store-filter clearfix">
+    <span class="store-qty">Đang xem <%= count %>/<%= countAll %> sản phẩm</span>
+    <ul class="store-pagination">
+        <% for (var i = 1; i <= countPages; i++) { %>
+        <li <% if (page == i) { %> class="active" <% } %>>
+            <a <% if (page != i) { %> href="?<%= filterStr %><%= sortStr %>count=<%= count %>&page=<%= i %>" <% } %> ><%= i %></a>
+        </li>
+        <% } %>
+    </ul>
+</div>

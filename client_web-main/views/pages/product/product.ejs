@@ -1,0 +1,392 @@
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="/">Trang chủ</a></li>
+                    <li><a href="/store?category=<%= product.category %>"><%= product.category %></a></li>
+                    <li><a href="/store?producer=<%= product.producer %>"><%= product.producer %></a></li>
+                    <li class="active"><%= product.name %></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- Product main img -->
+            <div class="col-md-5 col-md-push-2">
+                <div id="product-main-img">
+                    <div class="product-preview">
+                        <img src="<%= product.imgSrc %>" alt="">
+                    </div>
+                    <div class="product-preview">
+                        <img src="<%= product.imgSrc %>" alt="">
+                    </div>
+                    <div class="product-preview">
+                        <img src="<%= product.imgSrc %>" alt="">
+                    </div>
+                    <div class="product-preview">
+                        <img src="<%= product.imgSrc %>" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- /Product main img -->
+
+            <!-- Product thumb imgs -->
+            <div class="col-md-2  col-md-pull-5">
+                <div id="product-imgs">
+                    <div class="product-preview">
+                        <img src="<%= product.imgSrc %>" alt="">
+                    </div>
+                    <div class="product-preview">
+                        <img src="<%= product.imgSrc %>" alt="">
+                    </div>
+                    <div class="product-preview">
+                        <img src="<%= product.imgSrc %>" alt="">
+                    </div>
+                    <div class="product-preview">
+                        <img src="<%= product.imgSrc %>" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- /Product thumb imgs -->
+
+            <!-- Product details -->
+            <div class="col-md-5">
+                <div class="product-details">
+                    <h2 class="product-name"><%= product.name %></h2>
+                    <div>
+                        <img width="20px" height="20px" src="./img/eye-solid.svg" alt=""> Số lượt xem: <%= views %>
+                    </div>
+                    <div>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <a class="review-link" href="#tab3">10 đánh giá | Thêm đánh giá</a>
+                    </div>
+                    <div>
+                        <h3 class="product-price"><%= priceConverter(product.price) %> đ
+                            <del class="product-old-price"><%= priceConverter(product.old_price) %> đ</del>
+                        </h3>
+                        <span class="product-available">Còn hàng</span>
+                    </div>
+
+                    <div class="add-to-cart">
+                        <div class="qty-label">
+                            Số lượng
+                            <div class="input-number">
+                                <input type="number" value="1" min="1" id="quantity">
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
+                        </div>
+
+                        <!-- These are for localStorage -->
+                        <input id="id" type="text" value="<%= product._id %>" hidden>
+                        <input id="imgSrc" type="text" value="<%= product.imgSrc %>" hidden>
+                        <input id="name" type="text" value="<%= product.name %>" hidden>
+                        <input id="price" type="number" value="<%= product.price %>" hidden>
+                        <button class="add-to-cart-btn" onclick="addToCart()"><i class="fa fa-shopping-cart"></i>
+                            thêm vào giỏ</button>
+                        <!-- These are for localStorage -->
+
+                    </div>
+
+                    <!-- <ul class="product-btns">
+                        <li><a href="#"><i class="fa fa-heart-o"></i> thêm vào danh sách </a></li>
+                        <li><a href="#"><i class="fa fa-exchange"></i> thêm vào so sánh</a></li>
+                    </ul> -->
+
+                    <ul class="product-links">
+                        <li>Danh mục:</li>
+                        <li><a href="/store?category=<%= product.category %>"><%= product.category %></a></li>
+                    </ul>
+
+                    <ul class="product-links">
+                        <li>Nhà sản xuất:</li>
+                        <li><a href="/store?producer=<%= product.producer %>"><%= product.producer %></a></li>
+                    </ul>
+
+                    <ul class="product-links">
+                        <li>Chia sẻ:</li>
+                        <li><a href="https://www.facebook.com/"><i class="fa fa-facebook fa-2x"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram fa-2x"></i></a></li>
+                        <li><a href="#"><i class="fa fa-envelope fa-2x"></i></a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <!-- /Product details -->
+
+            <!-- Product tab -->
+            <div class="col-md-12">
+                <div id="product-tab">
+                    <!-- product tab nav -->
+                    <ul class="tab-nav">
+                        <li><a data-toggle="tab" href="#tab1">Mô tả sản phẩm</a></li>
+                        <li><a data-toggle="tab" href="#tab2">Thông tin sản phẩm</a></li>
+                        <li class="active"><a data-toggle="tab" href="#tab3">Nhận xét</a></li>
+                    </ul>
+                    <!-- /product tab nav -->
+
+                    <!-- product tab content -->
+                    <div class="tab-content">
+                        <!-- tab1  -->
+                        <div id="tab1" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a style="color: black;"><%= product.description %></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /tab1  -->
+
+                        <!-- tab2  -->
+                        <div id="tab2" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        <%= product.configuration %>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /tab2  -->
+
+                        <!-- tab3  -->
+                        <div id="tab3" class="tab-pane fade in active">
+                            <div class="row">
+                                <!-- Rating -->
+                                <div class="col-md-3">
+                                    <div id="rating">
+                                        <div class="rating-avg">
+                                            <span>4</span>
+                                            <div class="rating-stars">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i>
+                                            </div>
+                                        </div>
+                                        <ul class="rating">
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div style="width: 80%;"></div>
+                                                </div>
+                                                <span class="sum">1</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div style="width: 60%;"></div>
+                                                </div>
+                                                <span class="sum">2</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div></div>
+                                                </div>
+                                                <span class="sum">1</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div></div>
+                                                </div>
+                                                <span class="sum">0</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div></div>
+                                                </div>
+                                                <span class="sum">0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Rating -->
+
+                                <!-- Reviews -->
+                                <div class="col-md-6">
+                                    <div id="reviews">
+                                        <ul class="reviews">
+                                            <%- include ('../../partials/comments') %>
+                                        </ul>
+                                        <ul class="reviews-pagination">
+                                            <% for (;i <= countPages; i++) { %>
+                                            <li <% if (page == i) { %> class="active" <% } %>>
+                                                <a <% if (page != i) { %> href="?page=<%= i %>" <% } %>><%= i %></a>
+                                            </li>
+                                            <% } %>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Reviews -->
+
+                                <!-- Review Form -->
+                                <div class="col-md-3">
+                                    <div id="review-form">
+                                        <form class="review-form" action="/product/comment/<%= product._id %>"
+                                            method="POST">
+                                            <input class="input" type="text" placeholder="Họ tên" name="name"
+                                                <% if (typeof user != 'undefined') { %> value="<%= user.name %>" <% } %>
+                                                required>
+                                            <textarea class="input" placeholder="Nhận xét của bạn" name="content"
+                                                required></textarea>
+                                            <div class="input-rating">
+                                                <span>Đánh giá của bạn: </span>
+                                                <div class="stars">
+                                                    <input id="star5" name="rating" value="5" type="radio"><label
+                                                        for="star5"></label>
+                                                    <input id="star4" name="rating" value="4" type="radio"><label
+                                                        for="star4"></label>
+                                                    <input id="star3" name="rating" value="3" type="radio"><label
+                                                        for="star3"></label>
+                                                    <input id="star2" name="rating" value="2" type="radio"><label
+                                                        for="star2"></label>
+                                                    <input id="star1" name="rating" value="1" type="radio"><label
+                                                        for="star1"></label>
+                                                </div>
+                                            </div>
+                                            <button class="primary-btn" type="submit">Đăng</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /Review Form -->
+                            </div>
+                        </div>
+                        <!-- /tab3  -->
+                    </div>
+                    <!-- /product tab content  -->
+                </div>
+            </div>
+            <!-- /product tab -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+<!-- Section product relate-->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title text-center">
+                    <h3 class="title">Sản phẩm liên quan</h3>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs">
+                        <div id="tab1" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <%- include ("../../partials/list-products") %>
+                            </div>
+                            <div id="slick-nav-1" class="products-slick-nav"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Section -->
+
+<script>
+    function addToCart() {
+        // Get old items
+        var oldItems = JSON.parse(localStorage.getItem('itemsArray')) || [];
+
+        // Create new item
+        var newItem =
+        {
+            id: document.getElementById("id").value,
+            imgSrc: document.getElementById("imgSrc").value,
+            name: document.getElementById("name").value,
+            price: parseInt(document.getElementById("price").value),
+            quantity: parseInt(document.getElementById("quantity").value)
+        };
+
+        var exist = false;
+        // If exist, only add quantity
+        var i;
+        for (i = 0; i < oldItems.length; i++) {
+            if (oldItems[i].id == newItem.id) {
+                exist = true;
+                oldItems[i].quantity += newItem.quantity;
+                break;
+            }
+        }
+
+        // If not, add newItem
+        if (exist == false) {
+            oldItems.push(newItem);
+            // Don't forget to reset cart quantity icon
+            var cartQuantityIcon = document.getElementById('cart-quantity');
+            cartQuantityIcon.style.visibility = 'visible';
+            cartQuantityIcon.innerHTML = oldItems.length;
+        }
+
+        // Save
+        localStorage.setItem('itemsArray', JSON.stringify(oldItems));
+        // Alert
+        alert("Sản phẩm đã được thêm vào giỏ hàng");
+    }
+</script>

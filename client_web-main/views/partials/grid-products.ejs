@@ -1,0 +1,79 @@
+<!-- Phần ô sản phẩm  -->
+<div class="product-show">
+    <div class="row">
+        <% products.forEach((entry) => { %>
+        <div class="col-md-3 col-xs-6">
+            <div class="product product_store">
+                <a href="/product/<%= entry._id %>">
+                    <div class="product-img">
+                        <img src="<%= entry.imgSrc %>" alt="">
+                        <div class="product-label">
+                            <!-- <span class="sale">-30%</span>
+                        <span class="new">MỚI</span> -->
+                        </div>
+                    </div>
+                </a>
+                <div class="product-body">
+                    <p class="product-category"><%= entry.category %></p>
+                    <h3 class="product-name"><a href="/product/<%= entry._id %>"><%= entry.name %></a></h3>
+                    <h4 class="product-price"><%= priceConverter(entry.price) %> đ <del
+                            class="product-old-price"><%= priceConverter(entry.old_price) %> đ</del>
+                    </h4>
+                </div>
+                <!-- <div class="add-to-cart">
+                    <button id="<%= entry._id %>_<%= entry.imgSrc %>_<%= entry.name %>_<%= entry.price %>" class="add-to-cart-btn" onclick="addToCart(this)">
+                        <i class="fa fa-shopping-cart"></i><p style="font-size:12px;">Thêm vào giỏ</p>
+                    </button>
+                </div> -->
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>
+
+<script>
+    function addToCart(button) {
+        // Get product info
+        productInfo = button.id.split('_');
+        console.log(productInfo);
+
+        // Get old items
+        var oldItems = JSON.parse(localStorage.getItem('itemsArray')) || [];
+
+        // Create new item
+        var newItem =
+        {
+            id: productInfo[0],
+            imgSrc: productInfo[1],
+            name: productInfo[2],
+            price: parseInt(productInfo[3]),
+            quantity: 1
+        };
+
+        var exist = false;
+        // If exist, only add quantity
+        var i;
+        for (i = 0; i < oldItems.length; i++) {
+            if (oldItems[i].id == newItem.id) {
+                exist = true;
+                oldItems[i].quantity += newItem.quantity;
+                break;
+            }
+        }
+
+        // If not, add newItem
+        if (exist == false) {
+            oldItems.push(newItem);
+            // Don't forget to reset cart quantity icon
+            var cartQuantityIcon = document.getElementById('cart-quantity');
+            cartQuantityIcon.style.visibility = 'visible';
+            cartQuantityIcon.innerHTML = oldItems.length;
+        }
+
+        // Save
+        localStorage.setItem('itemsArray', JSON.stringify(oldItems));
+
+        // Alert
+        alert("Sản phẩm đã được thêm vào giỏ hàng");
+    }
+</script>

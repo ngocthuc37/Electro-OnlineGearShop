@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+   <meta name="description" content="" />
+   <meta name="author" content="" />
+   <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]-->
+   <title>Electro Admin</title>
+   <!-- BOOTSTRAP CORE STYLE  -->
+   <link href="stylesheets/bootstrap.css" rel="stylesheet" />
+   <!-- FONT AWESOME STYLE  -->
+   <link href="stylesheets/font-awesome.css" rel="stylesheet" />
+   <!-- CUSTOM STYLE  -->
+   <link href="stylesheets/style.css" rel="stylesheet" />
+   <!-- GOOGLE FONT -->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+   <!-- ICON -->
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+   <style>
+      .panel-footer {
+         height: 120px;
+      }
+   </style>
+</head>
+
+<body>
+
+   <%- include('../partials/header.ejs') %>
+
+   <!-- MENU SECTION END-->
+   <div class="content-wrapper">
+      <div class="container">
+         <div class="row pad-botm">
+            <div class="col-md-12">
+               <h4 class="header-line"> QUẢN LÝ CỬA HÀNG</h4>
+            </div>
+            <span class="col-md-12 input-group-prepend" style="text-align: right">
+               <span>Thêm cửa hàng</span>
+               <button class="btn btn-outline-primary create-store" type="button" data-toggle="modal"
+                  data-target="#myModal" id="btn-add-store">
+                  <i class="fa fa-plus-square"></i>
+               </button>
+            </span>
+         </div>
+         <div class="row">
+
+            <% stores.forEach((entry) => { %>
+
+            <div class="col-md-4 col-sm-4">
+               <div class="panel" data-toggle="modal" data-target="#myModal">
+                  <div class="panel-heading header-panel store-name"
+                     style="display: flex; flex-direction: row;justify-content: space-between;align-items: center;">
+                     <span><%= entry.name %></span>
+
+                     <a class="btn btn-outline-primary btn-delete-product" type="button"
+                        href="/store/delete/<%= entry._id %>" style="border-color: white;color: white;">
+                        <i class="far fa-trash-alt"></i>
+                     </a>
+                  </div>
+                  <div class="panel-body" style="text-align: center" id="store-image">
+                     <img class="img-store" src="<%= entry.image %>" data-id="">
+                  </div>
+                  <!-- <div class="panel-footer store-address"><%= entry.describe %></div> -->
+                  <div class="panel-footer store-address"><%= entry.describe %><br><%= entry.address %></div>
+
+               </div>
+            </div>
+
+            <% }) %>
+         </div>
+      </div>
+   </div>
+   <!-- CONTENT-WRAPPER SECTION END-->
+   <%- include('../partials/footer.ejs') %>
+
+
+   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+      style="display: none;">
+      action="/user/edit
+      <form class="edit-form" method="POST" id="my-form" enctype="multipart/form-data">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header header-panel">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4 class="modal-title" id="myModalLabel" style="font-weight: bold">Thông tin cửa hàng</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="col-md-12 col-lg-12">
+                     <div class="form-group row">
+                        <label class="col-lg-2 col-md-2 col-form-label">Tên</label>
+                        <div class="col-lg-10 col-md-10">
+                           <input class="form-control name" type="text" id="txt-store-name" name='name' required>
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="col-lg-2 col-md-2 col-form-label">Địa chỉ</label>
+                        <div class="col-lg-10 col-md-10">
+                           <input class="form-control address" type="text" id="txt-store-address" name='address'
+                              required>
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="col-lg-2 col-md-2 col-form-label">Mô tả</label>
+                        <div class="col-lg-10 col-md-10">
+                           <input class="form-control name" type="text" id="txt-store-des" name='describe' required>
+                        </div>
+                     </div>
+                     <label class="col-form-label">Hình ảnh</label>
+                     <div class="form-group">
+                        <section class="thumbnail-container">
+                           <div class="thumbnail-container--content image-box" for="image-upload">
+                              <input accept="image/jpeg, image/gif, image/png" id="image-upload" multiple=""
+                                 style="display: none;" type="file" name="image" onchange="loadFile(event)" required>
+                              <label class="style-pointer" for="image-upload" style="max-height: 100%; max-width: 100%">
+                                 <img class="img-dialog" src="images/imageHolder.png" id="txt-store-image">
+                              </label>
+                           </div>
+                        </section>
+                     </div>
+                     <div>
+                        <input style="display: none;" name="id" id="txtId">
+                     </div>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                  <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+
+   <!-- FOOTER SECTION END-->
+   <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+   <!-- CORE JQUERY  -->
+   <script src="javascripts/jquery-1.10.2.js"></script>
+   <!-- BOOTSTRAP SCRIPTS  -->
+   <script src="javascripts/bootstrap.js"></script>
+   <!-- CUSTOM SCRIPTS  -->
+   <script src="javascripts/custom.js"></script>
+
+   <!--    Add new Store-->
+   <script>
+      $("#btn-add-store").click(function () {
+         $("#my-form").attr('action', '/store/add');
+         $('#txt-store-name').attr('placeholder', '');
+         $('#txt-store-des').attr('placeholder', '');
+         $('#txt-store-image').attr('src', 'images/imageHolder.png');
+         $('#txt-store-address').attr('placeholder', '');
+      })
+
+      $(".open-dialog").click(function () {
+         var id = $(this).data('id');
+         $("#my-form").attr('action', '/store/edit');
+         var name = $(this).find(".store-name span").text();
+         var address = $(this).find(".store-address").text();
+         var img = $(this).find(".img-store").attr('src');
+         var id = $(this).find(".img-store").data("id");
+         $('#txt-store-name').attr('placeholder', name);
+         $('#txt-store-des').attr('placeholder', '');
+         $('#txt-store-image').attr('src', img);
+         $('#txt-store-address').attr('placeholder', address);
+         $('#txtId').attr('value', id);
+      })
+      var loadFile = function (event) {
+         var image = document.getElementById('txt-store-image');
+         image.src = URL.createObjectURL(event.target.files[0]);
+      };
+   </script>
+</body>
+
+</html>

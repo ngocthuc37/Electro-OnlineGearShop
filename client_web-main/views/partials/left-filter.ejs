@@ -1,0 +1,127 @@
+<form action="/store" method="POST">
+    <!-- Left Widget -->
+    <div class="aside">
+        <h3 class="aside-title">Danh mục</h3>
+        <div class="checkbox-filter">
+            <div class="input-radio">
+                <input type="radio" id="category-0" name="category" value="" checked>
+                <label for="category-0">
+                    <span></span>
+                    Tất cả
+                </label>
+            </div>
+        
+            <div class="input-radio">
+                <input type="radio" id="category-1" name="category" value="Bàn%20phím"
+                    <% if (category == "Bàn phím") { %> checked <% } %>>
+                <label for="category-1">
+                    <span></span>
+                    Bàn phím
+                </label>
+            </div>
+
+            <div class="input-radio">
+                <input type="radio" id="category-2" name="category" value="Chuột"
+                    <% if (category == "Chuột") { %> checked <% } %>>
+                <label for="category-2">
+                    <span></span>
+                    Chuột
+                </label>
+            </div>
+
+            <div class="input-radio">
+                <input type="radio" id="category-3" name="category" value="Loa"
+                    <% if (category == "Loa") { %> checked <% } %>>
+                <label for="category-3">
+                    <span></span>
+                    Loa
+                </label>
+            </div>
+
+            <div class="input-radio">
+                <input type="radio" id="category-4" name="category" value="Tai%20nghe"
+                    <% if (category == "Tai nghe") { %> checked <% } %>>
+                <label for="category-4">
+                    <span></span>
+                    Tai nghe
+                </label>
+            </div>
+        </div>
+    </div>
+    <!-- /aside Widget -->
+
+    <!-- aside Widget -->
+    <div class="aside">
+        <h3 class="aside-title">Giá</h3>
+        <div class="price-filter">
+            <div class="input-number price-min">
+                <p>Thấp nhất</p>
+                <input type="number" name="min" value="<%= min %>" min="0">
+            </div>
+            <span>-</span>
+            <div class="input-number price-min">
+                <p>Cao nhất</p>
+                <input type="number" name="max" value="<%= max %>" min="1">
+            </div>
+        </div>
+    </div>
+    <!-- /aside Widget -->
+
+    <!-- aside Widget -->
+    <div class="aside">
+        <h3 class="aside-title">Nhà sản xuất</h3>
+        <div class="checkbox-filter">
+            <div class="input-radio">
+                <input type="radio" id="brand-0" name="producer" value="" checked>
+                <label for="brand-0">
+                    <span></span>
+                    Tất cả
+                </label>
+            </div>
+
+            <div class="input-radio">
+                <input type="radio" id="brand-1" name="producer" value="Asus"
+                    <% if (producer == "Asus") { %> checked <% } %>>
+                <label for="brand-1">
+                    <span></span>
+                    Asus
+                </label>
+            </div>
+            <div class="input-radio">
+                <input type="radio" id="brand-2" name="producer" value="Fuhlen"
+                    <% if (producer == "Fuhlen") { %> checked <% } %>>
+                <label for="brand-2">
+                    <span></span>
+                    Fuhlen
+                </label>
+            </div>
+            <div class="input-radio">
+                <input type="radio" id="brand-3" name="producer" value="Logitech"
+                    <% if (producer == "Logitech") { %> checked <% } %>>
+                <label for="brand-3">
+                    <span></span>
+                    Logitech
+                </label>
+            </div>
+            <div class="input-radio">
+                <input type="radio" id="brand-4" name="producer" value="Sony"
+                    <% if (producer == "Sony") { %> checked <% } %>>
+                <label for="brand-4">
+                    <span></span>
+                    Sony
+                </label>
+            </div>
+            <div class="input-radio">
+                <input type="radio" id="brand-5" name="producer" value="Razer"
+                    <% if (producer == "Razer") { %> checked <% } %>>
+                <label for="brand-5">
+                    <span></span>
+                    Razer
+                </label>
+            </div>
+        </div>
+    </div>
+    <!-- /aside Widget -->
+    <br><br>
+    <button type="submit" class="btn btn-danger">Lọc sản phẩm</button>
+</form>

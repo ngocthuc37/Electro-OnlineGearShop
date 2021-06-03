@@ -1,0 +1,310 @@
+<div class="container">
+    <div class="cart_container">
+        <div class="home">
+            <div class="home_container ">
+                <div class="home_content text-center">
+                    <div class="home_title">Giỏ hàng</div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th id="col-cart-1" scope="col">Sản phẩm</th>
+                    <th id="col-cart-2" scope="col">Đơn giá</th>
+                    <th id="col-cart-2" scope="col">Số lượng</th>
+                    <th id="col-cart-2" scope="col">Tổng cộng</th>
+                    <th id="del-product" scope="col">
+                        <button id="delete-all" type="button" class="btn btn-danger" onclick="deleteAll()">Xóa tất cả</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="cart">
+
+            </tbody>
+        </table>
+        <div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-4 form-total-money">
+                <div class="summary summary-cart">
+                    <h3 class="summary-title text-center">Tổng tiền giỏ hàng</h3><!-- End .summary-title -->
+
+                    <table class="table table-summary">
+                        <tbody class="checkbox-filter">
+                            <tr class="summary-subtotal">
+                                <td>Tạm tính:</td>
+                                <td id="subtotal"></td>
+                            </tr><!-- End .summary-subtotal -->
+                            <tr class="summary-shipping">
+                                <td>Phí giao hàng:</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr class="summary-shipping-row">
+                                <td>
+                                    <div>
+                                        <input type="radio" id="free-shipping" name="shipping" onclick="shippingSelection(0)" checked>
+                                        <label class="custom-control-label" for="free-shipping">Free Shipping</label>
+                                    </div>
+                                </td>
+                                <td style="color: rgb(13, 128, 46);"> Free</td>
+                            </tr>
+                            <tr class="summary-shipping-row">
+                                <td>
+                                    <div>
+                                        <input type="radio" id="standard-shipping" name="shipping" onclick="shippingSelection(1)">
+                                        <label class="custom-control-label" for="standard-shipping">Standard:(3 - 4 ngày)</label>
+                                    </div>
+                                </td>
+                                <td>20.000 đ</td>
+                            </tr>
+                            <tr class="summary-shipping-row">
+                                <td>
+                                    <div>
+                                        <input type="radio" id="express-shipping" name="shipping" onclick="shippingSelection(2)">
+                                        <label class="custom-control-label" for="express-shipping">Express:(1 ngày)</label>
+                                    </div>
+                                </td>
+                                <td>40.000 đ</td>
+                            </tr>
+                            <tr class="summary-total">
+                                <td>Tổng cộng:</td>
+                                <td id="total-cost"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="buy-checkout-2">
+                        <a href="/users/checkout">
+                            <button id="checkout-button" type="button" class="btn btn-danger continue-checkout" disabled>
+                                Thanh toán ngay
+                            </button>
+                        </a>
+                        <a href="/store?count=12&page=1"><button type="button" class="btn btn-danger continue-shopping">Tiếp tục mua
+                                hàng</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Load items from localStorage and generate table ==========================================================
+        // Get items
+        var items = JSON.parse(localStorage.getItem('itemsArray')) || [];
+        // Get shipping fee
+        var shippingFee = parseInt(localStorage.getItem('shippingFee')) || 0;
+        
+        //  Recheck shipping method
+        switch (shippingFee) {
+            case 0:
+                document.getElementById('free-shipping').checked = true;
+                break;
+            case 20000:
+                document.getElementById('standard-shipping').checked = true;
+                break;
+            case 40000:
+                document.getElementById('express-shipping').checked = true;
+                break;
+        }
+
+        // If items is not empty, show delete all button, enable checkout button
+        if (items.length > 0) {
+            document.getElementById("delete-all").style.visibility = "visible";
+            document.getElementById("checkout-button").disabled = false;
+        } else {
+            document.getElementById("delete-all").style.visibility = "hidden";
+        }
+
+        // Get cart table
+        var table = document.getElementById("cart");
+
+        // Add each row to table, and increase subtotal
+        var subtotal = 0;
+        var i;
+        for (i = 0; i < items.length; i++) {
+            var row = table.insertRow(i);
+            // Add each cell to row
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+
+            // Assign each cell as html string
+            // Cell1 - Product name
+            cell1.innerHTML =
+            '<div><a href="/product/' + items[i].id + '"><img src="' + items[i].imgSrc + '" alt=""></a>' +
+                '<a href="/product/' + items[i].id + '"><p>' + items[i].name + '</p></a>' +
+            '</div>';
+            cell1.className = 'img-info-prod';
+
+            // Cell2 - Product price
+            cell2.innerHTML =
+            '<p>' + priceConverter(items[i].price) + ' đ</p>';
+            cell2.id = 'col-cart-3';
+
+            // Cell3 - Product quantity
+            cell3.innerHTML =
+            '<div class="qty-label d-flex justify-content-around quantity-prod"></div>' +
+            '<div class="input-number">' +
+                '<span class="qty-down">-</span>' +
+                '<input id="item-quantity-' + i + '" type="number" value="' + items[i].quantity + '" min="1" onchange="changeItemQuantity(' + i + ')">' +
+                '<span class="qty-up">+</span>' +
+            '</div>';
+            cell3.id = 'col-cart-3';
+
+            // Cell4 - Total item cost
+            cell4.innerHTML =
+            '<p id="total-item-cost-' + i + '">' + priceConverter(items[i].price * items[i].quantity) + ' đ</p>';
+            cell4.id = 'col-cart-3';
+
+            // Cell5 - Delete button
+            cell5.innerHTML =
+            '<button type="submit" class="btn btn-danger" onclick="deleteItem(' + i + ')">Xóa</button>';
+            cell5.id = 'col-cart-4';
+
+            // Increase subtotal
+            subtotal += items[i].price * items[i].quantity;
+        }
+
+        // Set subtotal and total cost
+        document.getElementById('subtotal').innerHTML = priceConverter(subtotal) + ' đ';
+        document.getElementById('total-cost').innerHTML = priceConverter(subtotal + shippingFee) + ' đ';
+
+    // Functions ================================================================================================
+    // Select shipping method and update total cost
+    // Type: 0 - free, 1 - standard, 2- express
+    function shippingSelection(type) {
+        // Get total cost
+        var totalCost = document.getElementById('total-cost');
+
+        // Update total cost and shipping fee
+        switch (type) {
+            case 0:
+                totalCost.innerHTML = priceConverter(subtotal) + ' đ';
+                shippingFee = 0;
+                break;
+            case 1:
+                totalCost.innerHTML = priceConverter(subtotal + 20000) + ' đ';
+                shippingFee = 20000;
+                break;
+            case 2:
+                totalCost.innerHTML = priceConverter(subtotal + 40000) + ' đ';
+                shippingFee = 40000;
+                break;
+        }
+
+        // Update local storage
+        localStorage.shippingFee = shippingFee;
+    }
+
+    // Convert price from number to string with commas
+    function priceConverter(x) {
+        // Using regular expression
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Delete item i
+    function deleteItem(i) {
+        // Get cart table and delete at i
+        document.getElementById("cart").deleteRow(i);
+
+        // Get items
+        var items = JSON.parse(localStorage.getItem('itemsArray')) || [];
+
+        // Delete at index i
+        items.splice(i, 1);
+
+        // Reset subtotal
+        subtotal = 0;
+        var j;
+        for (j = 0; j < items.length; j++) {
+            subtotal += items[j].price * items[j].quantity;
+        }
+        document.getElementById('subtotal').innerHTML = priceConverter(subtotal) + ' đ';
+
+        // Recheck shipping method and reset total cost
+        var totalCost = document.getElementById('total-cost');
+        totalCost.innerHTML = priceConverter(subtotal + shippingFee) + ' đ';
+
+        // Don't forget to reset cart quantity icon
+        var cartQuantityIcon = document.getElementById('cart-quantity');
+        if (items.length > 0) {
+            cartQuantityIcon.innerHTML = items.length;
+        } else {
+            // If there's nothing left, hide cart quantity icon and delete all button, disable checkout button
+            cartQuantityIcon.style.visibility = 'hidden';
+            document.getElementById("delete-all").style.visibility = "hidden";
+            document.getElementById("checkout-button").disabled = true;
+        }
+
+        // Save
+        localStorage.setItem('itemsArray', JSON.stringify(items));
+
+        // Alert
+        alert("Một sản phẩm đã bị xóa khỏi giỏ hàng");
+    }
+
+    // Delete all items
+    function deleteAll() {
+        // Get items
+        var items = JSON.parse(localStorage.getItem('itemsArray')) || [];
+
+        // Get cart table and delete all
+        for (var i = 0; i < items.length; i++)
+        document.getElementById("cart").deleteRow(0);
+
+        // Reset subtotal and total cost
+        subtotal = 0;
+        document.getElementById('subtotal').innerHTML = priceConverter(subtotal) + ' đ';
+        document.getElementById('total-cost').innerHTML = priceConverter(subtotal + shippingFee) + ' đ';
+
+        // Hide cart quantity icon and delete all button, disable checkout button
+        cartQuantityIcon.style.visibility = 'hidden';
+        document.getElementById("delete-all").style.visibility = "hidden";
+        document.getElementById("checkout-button").disabled = true;
+
+        // Save items as empty array
+        localStorage.setItem('itemsArray', JSON.stringify([]));
+
+        // Alert
+        alert("Tất cả sản phẩm đã bị xóa khỏi giỏ hàng");
+    }
+
+    // Change item quantity
+    function changeItemQuantity(i) {
+        // Get items
+        var items = JSON.parse(localStorage.getItem('itemsArray')) || [];
+
+        // Get new quantity element
+        var newQuantity = parseInt(document.getElementById("item-quantity-" + i).value);
+
+        // If newQuantity < 1, reset as 1
+        if (newQuantity < 1) {
+            newQuantity = 1;
+            document.getElementById("item-quantity-" + i).value = 1;
+        }
+        
+        // Change at total item cost element
+        document.getElementById("total-item-cost-" + i).innerHTML = priceConverter(items[i].price * newQuantity) + ' đ';
+
+        // Change at array
+        items[i].quantity = newQuantity;
+
+        // Reset subtotal
+        subtotal = 0;
+        var j;
+        for (j = 0; j < items.length; j++) {
+            subtotal += items[j].price * items[j].quantity;
+        }
+        document.getElementById('subtotal').innerHTML = priceConverter(subtotal) + ' đ';
+
+        // Recheck shipping method and reset total cost
+        var totalCost = document.getElementById('total-cost');
+        totalCost.innerHTML = priceConverter(subtotal + shippingFee) + ' đ';
+
+        // Save
+        localStorage.setItem('itemsArray', JSON.stringify(items));
+    }
+</script>

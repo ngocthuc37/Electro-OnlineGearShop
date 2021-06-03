@@ -1,0 +1,18 @@
+<% comments.forEach(entry => { %>
+    <li>
+        <div class="review-heading">
+            <h5 class="name"><%= entry.username %></h5>
+            <p class="date">27/12/2020, 06:00 PM</p>
+            <div class="review-rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o empty"></i>
+            </div>
+        </div>
+        <div class="review-body">
+            <p><%= entry.content %></p>
+        </div>
+    </li>
+<% }) %>
